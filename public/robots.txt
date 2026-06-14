@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://usmnashd1.github.io/TalkAir/sitemap.xml

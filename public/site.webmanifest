@@ -1,0 +1,11 @@
+{
+  "name": "TalkAir",
+  "short_name": "TalkAir",
+  "description": "Free global voice conversations, study partners and skill sharing.",
+  "start_url": "/TalkAir/",
+  "scope": "/TalkAir/",
+  "display": "standalone",
+  "background_color": "#070b17",
+  "theme_color": "#070b17",
+  "icons": [{ "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

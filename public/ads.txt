@@ -1,0 +1,3 @@
+# Add the exact authorized-seller line supplied by Google AdSense after approval.
+# Example format only. Do not uncomment or use a made-up publisher ID:
+# google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0

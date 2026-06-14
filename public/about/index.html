@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#070b17">
+  <meta name="description" content="Learn why TalkAir combines anonymous voice chat, study partners and peer teaching in a free WebRTC-powered global network.">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TalkAir">
+  <meta property="og:title" content="About TalkAir | Free Global Voice & Learning Network">
+  <meta property="og:description" content="Learn why TalkAir combines anonymous voice chat, study partners and peer teaching in a free WebRTC-powered global network.">
+  <meta property="og:url" content="https://usmnashd1.github.io/TalkAir/about/">
+  <meta property="og:image" content="https://usmnashd1.github.io/TalkAir/social-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="TalkAir — Talk instantly. Learn globally.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="About TalkAir | Free Global Voice & Learning Network">
+  <meta name="twitter:description" content="Learn why TalkAir combines anonymous voice chat, study partners and peer teaching in a free WebRTC-powered global network.">
+  <meta name="twitter:image" content="https://usmnashd1.github.io/TalkAir/social-card.png">
+  <link rel="canonical" href="https://usmnashd1.github.io/TalkAir/about/">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../seo.css">
+  <title>About TalkAir | Free Global Voice & Learning Network</title>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://usmnashd1.github.io/TalkAir/about/#webpage","url":"https://usmnashd1.github.io/TalkAir/about/","name":"About TalkAir | Free Global Voice & Learning Network","description":"Learn why TalkAir combines anonymous voice chat, study partners and peer teaching in a free WebRTC-powered global network.","isPartOf":{"@id":"https://usmnashd1.github.io/TalkAir/#website"},"inLanguage":"en"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://usmnashd1.github.io/TalkAir/"},{"@type":"ListItem","position":2,"name":"A lighter way to meet, learn, and share knowledge","item":"https://usmnashd1.github.io/TalkAir/about/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Who operates TalkAir?","acceptedAnswer":{"@type":"Answer","text":"TalkAir is currently an independent MVP. Formal operator details must be published before a broad commercial launch."}},{"@type":"Question","name":"Is TalkAir open source?","acceptedAnswer":{"@type":"Answer","text":"The current deployment is hosted from a GitHub repository, but licensing terms should be checked in that repository before reuse."}},{"@type":"Question","name":"Why is audio peer to peer?","acceptedAnswer":{"@type":"Answer","text":"Direct WebRTC audio reduces central media bandwidth and can improve latency, though some networks require a TURN relay."}},{"@type":"Question","name":"Is TalkAir finished?","acceptedAnswer":{"@type":"Answer","text":"No. It is an MVP and still requires stronger moderation, legal review, TURN coverage, and production operations."}}]}]}</script>
+</head>
+<body>
+  <div class="noise"></div><div class="page-glow"></div>
+  <header class="site-header">
+    <a class="brand" href="../" aria-label="TalkAir home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>Talk<strong>Air</strong></span></a>
+    <nav class="site-nav" aria-label="Primary navigation"><a href="../random-voice-chat/">Random chat</a><a href="../study-room-online/">Study</a><a href="../safety/">Safety</a><a class="nav-cta" href="../">Start talking</a></nav>
+  </header>
+  <main>
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../">Home</a></li><li aria-current="page">A lighter way to meet, learn, and share knowledge</li></ol></nav>
+    <article>
+      <header class="article-hero"><span class="kicker">About TalkAir</span><h1>A lighter way to meet, learn, and share knowledge</h1><p>TalkAir is an experimental voice-first network built around a simple idea: useful human conversation should be immediate, global, and accessible without a complicated profile.</p><a class="primary-cta" href="../">Open TalkAir &rarr;</a></header>
+      <div class="quick-facts"><div><strong>Mission</strong><span>Reduce friction between people who want to talk or learn</span></div><div><strong>Technology</strong><span>Static frontend, edge signaling, and WebRTC audio</span></div><div><strong>Current stage</strong><span>Independent minimum viable product</span></div></div>
+      <div class="content-layout"><div class="article-content"><section id="section-1"><h2>Why TalkAir exists</h2><p>Many communication platforms begin with profiles, follower counts, photos, feeds, and algorithms. TalkAir begins with a conversation. Random Talk supports spontaneous interaction, Study Mode supports peer accountability, and Teach Mode is intended for informal knowledge sharing.</p><p>The goal is not to make every random match permanent. It is to make the next respectful conversation easier to begin.</p></section>
+<section id="section-2"><h2>How the technology works</h2><p>The frontend is a static website hosted on GitHub Pages. A Cloudflare Worker and Durable Object coordinate WebSocket sessions, matchmaking, room state, text messages, and WebRTC signaling. Once negotiation succeeds, microphone audio attempts to travel directly between browsers.</p><p>This architecture limits media-server costs, but direct peer connectivity does not work on every network. TURN relay infrastructure is part of the production roadmap.</p></section>
+<section id="section-3"><h2>What the MVP includes</h2><ul><li>Anonymous Random Talk matching</li><li>Topic-based Study and Teach modes</li><li>WebRTC microphone audio</li><li>Ephemeral text chat</li><li>Mute, Next, and Report controls</li><li>Responsive desktop and mobile interfaces</li></ul><p>Identity verification, qualified tutor badges, robust reputation, full moderation operations, TURN coverage, and persistent user profiles are not part of the current MVP.</p></section>
+<section id="section-4"><h2>Principles for growth</h2><h3>Privacy by minimization</h3><p>Collect less information where possible instead of building unnecessary personal dossiers.</p><h3>Clear states</h3><p>Distinguish matchmaking from a real WebRTC audio connection so users understand what is happening.</p><h3>Learning without false authority</h3><p>Peer conversation can support practice, but the platform should not imply that anonymous teachers are verified experts.</p><h3>Safety before virality</h3><p>Growth features must be accompanied by stronger reporting, moderation, age controls, and abuse prevention.</p></section>
+<section id="section-5"><h2>Open development direction</h2><p>Planned directions include stronger interest matching, invite links, study timers, language filters, optional profiles, reputation, accessibility improvements, TURN connectivity, and moderation tooling. AI transcription or summaries would require explicit consent and a revised privacy design before implementation.</p></section><section id="faq"><h2>Frequently asked questions</h2><div class="faq-list"><details><summary>Who operates TalkAir?</summary><p>TalkAir is currently an independent MVP. Formal operator details must be published before a broad commercial launch.</p></details>
+<details><summary>Is TalkAir open source?</summary><p>The current deployment is hosted from a GitHub repository, but licensing terms should be checked in that repository before reuse.</p></details>
+<details><summary>Why is audio peer to peer?</summary><p>Direct WebRTC audio reduces central media bandwidth and can improve latency, though some networks require a TURN relay.</p></details>
+<details><summary>Is TalkAir finished?</summary><p>No. It is an MVP and still requires stronger moderation, legal review, TURN coverage, and production operations.</p></details></div></section></div><aside class="page-toc" aria-label="On this page"><strong>On this page</strong><a href="#section-1">Why TalkAir exists</a>
+<a href="#section-2">How the technology works</a>
+<a href="#section-3">What the MVP includes</a>
+<a href="#section-4">Principles for growth</a>
+<a href="#section-5">Open development direction</a><a href="#faq">Frequently asked questions</a></aside></div>
+    </article>
+    <section class="related" aria-labelledby="related-title"><h2 id="related-title">Continue exploring TalkAir</h2><div class="related-grid"><a class="related-card" href="../random-voice-chat/"><strong>Meet someone new through free random voice chat</strong><span>Start a free random voice chat with people worldwide. TalkAir offers anonymous, audio-only matching with no registration required.</span></a>
+<a class="related-card" href="../study-room-online/"><strong>Find an online study partner and make focus social</strong><span>Find a free online study partner for focused voice sessions. Match by subject, set a goal, and use simple accountability techniques on TalkAir.</span></a>
+<a class="related-card" href="../safety/"><strong>Stay in control during every conversation</strong><span>Read TalkAir's voice chat safety rules: protect personal information, recognize scams, report abuse, and understand anonymous chat limitations.</span></a></div></section>
+  </main>
+  <footer class="site-footer"><a class="brand" href="../"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>Talk<strong>Air</strong></span></a><nav class="footer-links" aria-label="Footer navigation"><a href="../about/">About</a><a href="../contact/">Contact</a><a href="../safety/">Safety</a><a href="../privacy/">Privacy</a><a href="../terms/">Terms</a><a href="../sitemap.xml">Sitemap</a></nav><p class="footer-note">TalkAir is an independent MVP. Anonymous users and informal teachers are not identity or qualification verified.</p></footer>
+  <script src="../config.js"></script>
+  <script src="../analytics.js"></script>
+</body>
+</html>
