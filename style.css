@@ -179,6 +179,7 @@ footer .brand { color: var(--ink); }
 .call-avatar { width: 140px; height: 140px; border: 7px solid rgba(255,255,255,.07); font-size: 34px; }
 .call-person h2 { margin: 0 0 8px; font: 600 25px var(--font-display); letter-spacing: -.7px; }
 .call-person p { color: #787e91; font-size: 12px; }
+.enable-audio { margin-top: 8px; padding: 10px 15px; border: 1px solid rgba(138,255,212,.35); border-radius: 10px; background: rgba(138,255,212,.1); color: var(--mint); font-weight: 700; font-size: 11px; cursor: pointer; }
 .live-wave { height: 34px; margin: 20px 0 14px; }
 .live-wave i { width: 4px; background: var(--violet); }
 .search-radar { position: absolute; width: 230px; height: 230px; top: -45px; left: 50%; transform: translateX(-50%); }

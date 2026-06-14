@@ -23,6 +23,7 @@
     liveWave: $("#liveWave"),
     peerName: $("#peerName"),
     peerMeta: $("#peerMeta"),
+    enableAudio: $("#enableAudio"),
     muteButton: $("#muteButton"),
     nextButton: $("#nextButton"),
     reportButton: $("#reportButton"),
@@ -56,7 +57,10 @@
     timerId: null,
     unread: 0,
     toastId: null,
-    closing: false
+    closing: false,
+    connectionTimeout: null,
+    audioContext: null,
+    meterFrame: null
   };
 
   function setMode(mode) {
@@ -230,14 +234,23 @@
     const palette = colors[Math.floor(Math.random() * colors.length)];
     elements.callAvatar.style.background = `linear-gradient(145deg, ${palette[0]}, ${palette[1]})`;
     elements.avatarText.textContent = initials;
-    elements.peerName.textContent = `Connected with ${name}`;
-    elements.peerMeta.textContent = message.peer?.topic || places[Math.floor(Math.random() * places.length)];
+    elements.peerName.textContent = `Matching with ${name}`;
+    elements.peerMeta.textContent = "Negotiating a direct audio connection...";
     elements.searchRadar.hidden = true;
-    elements.liveWave.hidden = false;
-    setConnection("Peer connected", true);
+    elements.liveWave.hidden = true;
+    elements.enableAudio.hidden = true;
+    setConnection("Connecting audio", false);
     clearMessages();
-    startTimer();
     const peer = createPeer();
+    clearTimeout(state.connectionTimeout);
+    state.connectionTimeout = setTimeout(() => {
+      if (state.peer === peer && peer.connectionState !== "connected") {
+        setConnection("Audio blocked", false);
+        elements.peerName.textContent = `Could not connect to ${name}`;
+        elements.peerMeta.textContent = "This network may require a TURN relay. Try mobile data or another Wi-Fi network.";
+        showToast("Matchmaking worked, but the direct audio connection was blocked by the network.");
+      }
+    }, 15000);
     if (message.initiator) {
       await peer.setLocalDescription(await peer.createOffer());
       send({ type: "signal", data: { description: peer.localDescription } });
@@ -247,7 +260,10 @@
   function createPeer() {
     closePeer();
     const peer = new RTCPeerConnection({
-      iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
+      iceServers: [
+        { urls: "stun:stun.l.google.com:19302" },
+        { urls: "stun:stun1.l.google.com:19302" }
+      ]
     });
     state.peer = peer;
     state.pendingCandidates = [];
@@ -257,10 +273,23 @@
     });
     peer.addEventListener("track", ({ streams }) => {
       elements.remoteAudio.srcObject = streams[0];
-      elements.remoteAudio.play().catch(() => showToast("Tap the screen once to enable call audio."));
+      startVoiceMeter(streams[0]);
+      playRemoteAudio();
     });
     peer.addEventListener("connectionstatechange", () => {
-      if (peer.connectionState === "connected") setConnection("Live & private", true);
+      if (peer.connectionState === "connecting") setConnection("Connecting audio", false);
+      if (peer.connectionState === "connected") {
+        clearTimeout(state.connectionTimeout);
+        elements.peerName.textContent = elements.peerName.textContent.replace("Matching with", "Connected with");
+        elements.peerMeta.textContent = "Direct peer-to-peer audio is live";
+        elements.liveWave.hidden = false;
+        setConnection("Live & private", true);
+        startTimer();
+      }
+      if (peer.connectionState === "failed") {
+        setConnection("Audio failed", false);
+        elements.peerMeta.textContent = "The networks could not create a direct audio path. A TURN server is required.";
+      }
       if (["failed", "disconnected"].includes(peer.connectionState) && state.matched) {
         setTimeout(() => {
           if (["failed", "disconnected"].includes(peer.connectionState)) nextMatch();
@@ -288,6 +317,9 @@
   }
 
   function closePeer() {
+    clearTimeout(state.connectionTimeout);
+    state.connectionTimeout = null;
+    stopVoiceMeter();
     state.pendingCandidates = [];
     elements.remoteAudio.srcObject = null;
     if (state.peer) {
@@ -296,6 +328,49 @@
       state.peer.close();
       state.peer = null;
     }
+  }
+
+  async function playRemoteAudio() {
+    try {
+      await elements.remoteAudio.play();
+      elements.enableAudio.hidden = true;
+    } catch {
+      elements.enableAudio.hidden = false;
+      showToast("Your browser blocked call audio. Tap Enable call audio.");
+    }
+  }
+
+  function startVoiceMeter(stream) {
+    stopVoiceMeter();
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    state.audioContext = new AudioContext();
+    const analyser = state.audioContext.createAnalyser();
+    analyser.fftSize = 64;
+    state.audioContext.createMediaStreamSource(stream).connect(analyser);
+    const levels = new Uint8Array(analyser.frequencyBinCount);
+    const bars = $$("i", elements.liveWave);
+    const draw = () => {
+      analyser.getByteFrequencyData(levels);
+      bars.forEach((bar, index) => {
+        const level = levels[Math.min(index * 2, levels.length - 1)] / 255;
+        bar.style.height = `${Math.max(5, Math.round(level * 30))}px`;
+        bar.style.animation = "none";
+      });
+      state.meterFrame = requestAnimationFrame(draw);
+    };
+    draw();
+  }
+
+  function stopVoiceMeter() {
+    cancelAnimationFrame(state.meterFrame);
+    state.meterFrame = null;
+    state.audioContext?.close().catch(() => {});
+    state.audioContext = null;
+    $$("i", elements.liveWave).forEach((bar) => {
+      bar.style.height = "";
+      bar.style.animation = "";
+    });
   }
 
   function stopMedia() {
@@ -326,6 +401,7 @@
     elements.muteButton.classList.remove("muted");
     $("small", elements.muteButton).textContent = "Mute";
     elements.chatPanel.classList.remove("open");
+    elements.enableAudio.hidden = true;
     setConnection("Getting ready", false);
     clearMessages();
     setSearching("Searching the airwaves...");
@@ -410,6 +486,10 @@
   elements.muteButton.addEventListener("click", toggleMute);
   elements.nextButton.addEventListener("click", nextMatch);
   elements.reportButton.addEventListener("click", reportPeer);
+  elements.enableAudio.addEventListener("click", async () => {
+    await state.audioContext?.resume();
+    await playRemoteAudio();
+  });
   elements.mobileChatButton.addEventListener("click", openChat);
   elements.toggleChat.addEventListener("click", () => elements.chatPanel.classList.remove("open"));
   $("#exploreButton").addEventListener("click", () => $("#how-it-works").scrollIntoView({ behavior: "smooth" }));
